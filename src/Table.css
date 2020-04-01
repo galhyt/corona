@@ -1,0 +1,15 @@
+.corona-table {
+    border-style: solid;
+}
+
+.corona-table tr th,.corona-table tr:not(:last-of-type) td {
+    border-bottom-style: solid;
+}
+
+.corona-table tr th:not(:last-of-type),.corona-table tr td:not(:last-of-type) {
+    border-right-style: solid;
+}
+
+.corona-table tr td.curdate {
+    color : red;
+}

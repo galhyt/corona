@@ -16,19 +16,29 @@ const TableHeader = () => {
 
 const TableBody = props => {
     const {data} = props
+
+    const leadingZero = num => {
+        if (num < 10) return "0" + num
+        return num
+    }
     
+    const formatWithCommas = x => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
     const rows = data.map((entry, i) => {
-        var dailyRate = (i != 0 ?  (entry.sum / data[i-1].sum).toFixed(2) : "")
-        var averageRate = (i != 0 ? Math.pow(entry.sum/data[0].sum, (1/(i+1))).toFixed(2) : "" )
-        var avgRate5 = (i >= 4 ? Math.pow(entry.sum/data[i-4].sum, (1/5)).toFixed(2) : "" )
+        var selCls = ""
+        var now = new Date()
+        if (entry.date.getTime() == now.getTime()-now.getHours()*3600000-now.getMinutes()*60000-now.getSeconds()*1000-now.getMilliseconds())
+            selCls = "curdate"
+
         return (
             <tr>
-                <td>{entry.date}</td>
-                <td>{entry.sum}</td>
-                <td>{dailyRate}</td>
-                <td>{averageRate}</td>
-                <td>{avgRate5}</td>
-                <td></td>
+                <td className={selCls}>{leadingZero(entry.date.getDate()) + "/" + leadingZero(entry.date.getMonth()+1) + "/" + entry.date.getFullYear()}</td>
+                <td>{formatWithCommas(entry.sum.toFixed(0))}</td>
+                <td>{(entry.dailyRate != "" ? entry.dailyRate.toFixed(2) : "")}</td>
+                <td>{(entry.averageRate != "" ? entry.averageRate.toFixed(2) : "")}</td>
+                <td>{(entry.avgRate5 != "" ? entry.avgRate5.toFixed(2) : "")}</td>
             </tr>
         )
     })
@@ -40,7 +50,7 @@ class Table extends React.Component {
         const {data} = this.props
 
         return (
-            <table>
+            <table class="corona-table">
                 <TableHeader />
                 <TableBody data={data} />
             </table>
