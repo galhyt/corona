@@ -11,7 +11,7 @@ const getDerivedData = data => {
     var averageRate = (i != 0 ? Math.pow(entry.sum/data[0].sum, (1/(i+1))) : "" )
     var avgRate5 = (i >= 4 ? Math.pow(entry.sum/data[i-4].sum, (1/5)) : "" )
     return {
-      "date" : new Date(entry.date.replace(/^(\d+)\/(\d+)/, "$2/$1")),
+      "date" : new Date(entry.date),
       "sum" : entry.sum,
       "dailyRate" : dailyRate,
       "averageRate" : averageRate,
@@ -21,7 +21,7 @@ const getDerivedData = data => {
 }
 
 const getPredictData = data => {
-  const maxDate = new Date(data[data.length-1].date.replace(/^(\d+)\/(\d+)/, "$2/$1"))
+  const maxDate = new Date(data[data.length-1].date)
   var derivedData = getDerivedData(data)
 
   for (var i = derivedData.length, maxI = i+40 ; i < maxI ; i++) {

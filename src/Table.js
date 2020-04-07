@@ -29,11 +29,11 @@ const TableBody = props => {
     const rows = data.map((entry, i) => {
         var selCls = ""
         var now = new Date()
-        if (entry.date.getTime() == now.getTime()-now.getHours()*3600000-now.getMinutes()*60000-now.getSeconds()*1000-now.getMilliseconds())
+        if (entry.date.getTime()-entry.date.getHours()*3600000-entry.date.getMinutes()*60000-entry.date.getSeconds()*1000-entry.date.getMilliseconds() == now.getTime()-now.getHours()*3600000-now.getMinutes()*60000-now.getSeconds()*1000-now.getMilliseconds())
             selCls = "curdate"
 
         return (
-            <tr>
+            <tr key={i}>
                 <td className={selCls}>{leadingZero(entry.date.getDate()) + "/" + leadingZero(entry.date.getMonth()+1) + "/" + entry.date.getFullYear()}</td>
                 <td>{formatWithCommas(entry.sum.toFixed(0))}</td>
                 <td>{(entry.dailyRate != "" ? entry.dailyRate.toFixed(2) : "")}</td>
@@ -50,7 +50,7 @@ class Table extends React.Component {
         const {data} = this.props
 
         return (
-            <table class="corona-table">
+            <table className="corona-table">
                 <TableHeader />
                 <TableBody data={data} />
             </table>
