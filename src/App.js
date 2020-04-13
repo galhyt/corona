@@ -30,7 +30,7 @@ const getPredictData = data => {
     var avgRate5 = Math.pow(derivedData[i-1].sum/derivedData[i-5].sum, (1/5))
     var sum = derivedData[i-1].sum * avgRate5
     var dailyRate = sum / derivedData[i-1].sum
-    var averageRate = Math.pow(sum/derivedData[0].sum, (1/5))
+    var averageRate = Math.pow(sum/derivedData[0].sum, (1/(i+1)))
 
     derivedData = [...derivedData, {
       "date" : date,
